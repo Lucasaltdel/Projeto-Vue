@@ -32,8 +32,9 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
-  name: 'ProductDetailView',
   data() {
     return {
       product: null,
@@ -41,12 +42,15 @@ export default {
   },
   mounted() {
     const id = this.$route.params.id;
-    fetch(`https://dummyjson.com/products/${id}`)
-      .then((res) => res.json())
-      .then((data) => {
-        this.product = data;
+    axios.get(`https://dummyjson.com/products/${id}`)
+      .then(response => {
+        this.product = response.data;
       })
-      .catch((err) => console.error(err));
+      .catch(err => {
+        console.error('Erro ao carregar produto:', err);
+      });
   },
 };
 </script>
+
+
